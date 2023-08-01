@@ -2,6 +2,14 @@
 
 Personal project to track changes to the [Government of Canada's Tender Notices open data set](https://open.canada.ca/data/en/dataset/ffd38960-1853-4c19-ba26-e50bea2cb2d5)
 
+# Getting Started
+
+* Installations
+  * [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+  * **Visual Studio 2022** version `17.6` or greater. Be sure to check for updates!
+* Useful Commands
+  * `Get-ChildItem -Filter "bin","obj" -Recurse | Remove-Item -Force -Recurse`
+
 # About the Data Set
 
 * [Government of Canada's Tender Notices](https://open.canada.ca/data/en/dataset/ffd38960-1853-4c19-ba26-e50bea2cb2d5)
@@ -34,14 +42,67 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
 * Active Feed [RSS](https://buyandsell.gc.ca/procurement-data/feed?dds_facet_date_published=NOW/DAY-7DAYS%20TO%20NOW/DAY%2B86399999MILLISECONDS&ss_publishing_status=SDS-SS-005&sm_facet_procurement_data=%28tender_notice%20AND%20data_data_tender_notice%29&ss_language=en&rss_atom_title=%7B%22sm_facet_procurement_data%22%3A%5B%22tender_notice%22%2C%22data_data_tender_notice%22%5D%2C%22dds_facet_date_published%22%3A%5B%22dds_facet_date_published_7day%22%5D%2C%22ss_publishing_status%22%3A%5B%22SDS-SS-005%22%5D%7D) [ATOM](https://buyandsell.gc.ca/procurement-data/feed/atom?dds_facet_date_published=NOW/DAY-7DAYS%20TO%20NOW/DAY%2B86399999MILLISECONDS&ss_publishing_status=SDS-SS-005&sm_facet_procurement_data=%28tender_notice%20AND%20data_data_tender_notice%29&ss_language=en&rss_atom_title=%7B%22sm_facet_procurement_data%22%3A%5B%22tender_notice%22%2C%22data_data_tender_notice%22%5D%2C%22dds_facet_date_published%22%3A%5B%22dds_facet_date_published_7day%22%5D%2C%22ss_publishing_status%22%3A%5B%22SDS-SS-005%22%5D%7D)
   * Active tender notices published in the last 7 days.
 
-# TODO
+# Project Definition
 
-* ARM provisioning script to build environment
-* Evaluate RSS or ATOM feed parsing
-* Build Atom/Rss feed job loader
-* Define entry data structure & transitions
-* Define background processor
-* Build Website skeleton
-* Define Storage & Bandwidth limitations & Alerting
-* .NET Core 3.1 or serverless
-* DevOps all the things. Yaml pipeline, etc.
+* Inputs
+  * **Common**
+    * All RSS feeds have the following format:
+      * Channel
+        * Item
+          * Title
+          * Link
+          * Description
+          * Flags (Dictionary<string, string>)
+          * pubDate (Assumes is date added to current feed)
+          * creator
+          * feedGuid (uses string, not Guid type)
+            * This will be the Grain Id.
+            * Can exclude "news", "page", "event" guids.
+              * All others by default, should include only "data_data_sosa" values.
+              * If other types, add automatically.
+  * **Awarded** RSS
+    * Status: Awarded (inferred from input)
+  * **Active** RSS
+    * Status: Active (inferred from input)
+  * **Expired** RSS
+    * Status: Expired (inferred from input)
+  * **Amended** RSS
+    * 
+* Models
+  * **TenderNotice**
+    * Title
+    * Link
+    * Description
+    * Flags (Dictionary<string, string>)
+    * visibleDate
+      * Treated as Created Date, though is really date publication was identified through feeds.
+    * amendedDate
+      * All updates modify this record with the date in feed.
+    * updatedDate
+      * All updates modify this record with the current environment datetime.
+      * upatedDate always updated on any action.
+    * creator
+    * feedGuid (`string`, not `Guid` type)
+      * This will be the Grain Id.
+    * Status (Active, Awarded, Expired)
+  * **TenderNoticeProjection**
+    * feedGuid (or Grain Id)
+    * Title
+    * updatedDate
+    * Status (Active, Awarded, Expired)
+  * **TenderNoticesAggregate**
+    * ActiveTenderNotices: List<TenderNoticeProjection>
+    * ExpiredTenderNotices: List<TenderNoticeProjection>
+    * AwardedTenderNotices: List<TenderNoticeProjection>
+* Applications:
+  * **WebApi**
+    * Entry point for all model manipulation
+  * **Crawler**
+    * On interval, queries GoC and updates active, amended, expired, awarded
+
+# Technical Reference
+
+## Orleans
+
+* [Orleans Tutorials and Samples](https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/tutorial-1?source=recommendations)
+  * Consider using State instead of a database.
