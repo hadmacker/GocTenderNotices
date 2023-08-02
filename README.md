@@ -7,6 +7,9 @@ Personal project to track changes to the [Government of Canada's Tender Notices 
 * Installations
   * [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
   * **Visual Studio 2022** version `17.6` or greater. Be sure to check for updates!
+    * Extensions:
+      * [SwitchStartupProject for VS 2022](https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022)
+      * Open Command Line
   * [VS Code](https://code.visualstudio.com/Download)
     * Extensions:
       * [vscode-base64](https://marketplace.visualstudio.com/items?itemName=adamhartford.vscode-base64)
@@ -112,6 +115,14 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
 
 
 # Technical Reference
+
+## Automapper
+
+* [Automapper Home](https://automapper.org/)
+* [Getting Started](https://docs.automapper.org/en/latest/Getting-started.html)
+* [Dependency Injection](https://docs.automapper.org/en/latest/Dependency-injection.html)
+* [Configuration Profiles](https://docs.automapper.org/en/latest/Configuration.html#profile-instances)
+* [Projection](https://docs.automapper.org/en/latest/Projection.html)
 
 ## Orleans
 

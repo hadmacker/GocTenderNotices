@@ -11,11 +11,12 @@ namespace Client
         static async Task Main(string[] args)
         {
             var builder = Host.CreateDefaultBuilder(args)
-                .UseOrleansClient(client =>
-                {
-                    client.UseLocalhostClustering();
+               .UseOrleansClient((ctx, client) =>
+               {
+                   if (ctx.HostingEnvironment.IsDevelopment())
+                       client.UseLocalhostClustering();
 
-                    client.Services.AddSerializer(serializerBuilder =>
+                   client.Services.AddSerializer(serializerBuilder =>
                     {
                         serializerBuilder.AddJsonSerializer(
                             isSupported: type => type.Namespace.StartsWith("GocTenderNotices"));
@@ -36,7 +37,6 @@ namespace Client
                 Link = "LinkValue",
                 Description = "DescriptionValue",
                 VisibleDate = DateTime.Now,
-                AmendedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now,
                 Creator = "CreatorValue",
             }, GocTenderNotices.Contracts.State.ProcurementStatus.Active);
