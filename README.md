@@ -116,6 +116,14 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
 
 # Technical Reference
 
+## .NET
+
+* [Worker services in .NET](https://learn.microsoft.com/en-us/dotnet/core/extensions/workers?pivots=dotnet-7-0)
+
+## ASP.NET Core Web API
+
+* [Tutorial: Create a web API with ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-7.0&tabs=visual-studio)
+
 ## Automapper
 
 * [Automapper Home](https://automapper.org/)

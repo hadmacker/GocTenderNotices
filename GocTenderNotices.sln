@@ -22,20 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawler", "Crawler\Crawler.csproj", "{7D25A7F2-6D2C-4653-9675-E1456C1CEB86}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "procurement-data", "procurement-data", "{D8D1A8DB-6248-4695-8B57-C3884F543A56}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "feed", "feed", "{87E8E0E2-C7D5-4996-837E-24E49D98E3A7}"
-	ProjectSection(SolutionItems) = preProject
-		Documents\procurement-data\feed\active.rss = Documents\procurement-data\feed\active.rss
-		Documents\procurement-data\feed\active_link.rss = Documents\procurement-data\feed\active_link.rss
-		Documents\procurement-data\feed\amended.rss = Documents\procurement-data\feed\amended.rss
-		Documents\procurement-data\feed\amended_link.rss = Documents\procurement-data\feed\amended_link.rss
-		Documents\procurement-data\feed\awarded.rss = Documents\procurement-data\feed\awarded.rss
-		Documents\procurement-data\feed\awarded_link.rss = Documents\procurement-data\feed\awarded_link.rss
-		Documents\procurement-data\feed\expired.rss = Documents\procurement-data\feed\expired.rss
-		Documents\procurement-data\feed\expired_link.rss = Documents\procurement-data\feed\expired_link.rss
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,10 +59,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D8D1A8DB-6248-4695-8B57-C3884F543A56} = {D40B5DED-353E-41B6-975F-FE1648913B58}
-		{87E8E0E2-C7D5-4996-837E-24E49D98E3A7} = {D8D1A8DB-6248-4695-8B57-C3884F543A56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4F72F28-425A-4429-83AB-B57A45081DB0}
