@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Crawler Active": {
+      "commandName": "Project",
+      "commandLineArgs": "--targetStatus=\"Active\" --feed=\"file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/active.rss\""
+    },
+    "Crawler Awarded": {
+      "commandName": "Project",
+      "commandLineArgs": "--targetStatus=\"Awarded\" --feed=\"file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/awarded.rss\""
+    },
+    "Crawler Expired": {
+      "commandName": "Project",
+      "commandLineArgs": "--targetStatus=\"Expired\" --feed=\"file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/expired.rss\""
+    },
+    "Crawler Amended": {
+      "commandName": "Project",
+      "commandLineArgs": "--targetStatus=\"Amended\" --feed=\"file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/amended.rss\""
+    }
+  }
+}

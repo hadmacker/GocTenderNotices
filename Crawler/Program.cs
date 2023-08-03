@@ -7,7 +7,6 @@ using System.Xml.Linq;
 using WebApi.Client;
 using Microsoft.Extensions.Configuration;
 using WebApi.Contracts.DTO;
-using System.Diagnostics.Tracing;
 using System.Diagnostics;
 
 namespace Crawler
@@ -21,6 +20,7 @@ namespace Crawler
             // [Configuration](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration)
             builder.Configuration
                 .AddJsonFile("appsettings.json")
+                .AddCommandLine(args)
                 .AddEnvironmentVariables()
                 .Build();
 
@@ -138,7 +138,7 @@ namespace Crawler
                 _logger.LogError("Error fetching RSS feed: " + ex.Message);
             }
 
-            _logger.LogInformation($"Worker process complete in {elapsed.ToString()}");
+            _logger.LogInformation($"Worker process complete in {elapsed.Elapsed.ToString()}");
             _lifetime.StopApplication();
         }
     }
