@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xml:base="https://buyandsell.gc.ca/procurement-data/feed?keyword=&amp;ss_language=en&amp;ss_reference_number=&amp;ss_facet_policy_support=&amp;sm_facet_procurement_data=%28tender_notice%20AND%20data_data_tender_notice%29&amp;dds_facet_date_published=NOW/DAY-7DAYS%20TO%20NOW/DAY%2B86399999MILLISECONDS&amp;dds_facet_date_amended=&amp;dds_facet_date_closing=&amp;ss_publishing_status=SDS-SS-005&amp;sm_facet_gsin=&amp;sm_facet_unspsc=&amp;sm_facet_location=&amp;sm_facet_department=&amp;ss_supplier_standardized_name=&amp;hashcash=views_exposed_form" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tender Notice, GC Tender Notice, Published - last 7 days, Active - Buyandsell.gc.ca - Public Works and Government Services Canada</title>
+    <link>file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/active_alternate.rss</link>
+    <description></description>
+    <language>en</language>
+    <copyright>Procurement data carries an "Open Government Licence - Canada" that governs its use. Please refer to the section about Commercial Reproduction in the Buyandsell.gc.ca "Terms and Conditions" for more information.</copyright>
+     <atom:link href="file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/active.rss" rel="self" type="application/rss+xml" />
+      </channel>
+</rss>
