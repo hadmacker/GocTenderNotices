@@ -6,7 +6,7 @@ using WebApi.Contracts.DTO;
 namespace WebApi.Client
 {
     /// <summary>
-    /// [RestSharp RestCliant Usage](https://restsharp.dev/usage.html)
+    /// [RestSharp RestClient Usage](https://restsharp.dev/usage.html)
     /// </summary>
     public class TenderNoticesApiClient : ITenderNoticesApiClient
     {
