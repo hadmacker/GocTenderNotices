@@ -27,7 +27,15 @@ Personal project to track changes to the [Government of Canada's Tender Notices 
 
 ## How to Run
 
-1. Run the Silo: `
+See `run-*.ps1` files in repo root.
+
+Testing has been performed on downloaded GoC RSS feed data, which will be outdated. 
+Developers are welcome to commit alternative inputs or point to actual GoC procurement feed data when they are ready to work with live data.
+
+1. Run Silo: `run-silo.ps1`
+2. Run WebApi: `run-webapi.ps1`
+3. Run Crawler: `run-crawler-*.ps1`. Separate crawler files have been created for `active`, `amended`, `awarded`, and `expired` statuses.
+ 
 
 # About the Data Set
 
