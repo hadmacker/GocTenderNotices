@@ -94,35 +94,23 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
   * Assumes no prior history is relevant.
   * Awarded, Amended, Expired may be for prior history and this behaviour is untested. (See prior gap.)
   * Tender notices are not "deactivated" or cleaned up after a while. This system may not be suited for long-term large datasets as a result.
-* Models
-  * **TenderNotice**
-    * Title
-    * Link
-    * Description
-    * Flags (Dictionary<string, string>)
-    * visibleDate
-      * Treated as Created Date, though is really date publication was identified through feeds.
-    * updatedDate
-      * All updates modify this record with the current environment datetime.
-      * upatedDate always updated on any action.
-    * creator
-    * feedGuid (`string`, not `Guid` type)
-      * This will be the Grain Id.
-    * Status (Active, Awarded, Expired)
-  * **TenderNoticeProjection**
-    * feedGuid (or Grain Id)
-    * Title
-    * updatedDate
-    * Status (Active, Awarded, Expired)
-  * **TenderNoticesAggregate**
-    * ActiveTenderNotices: List<TenderNoticeProjection>
-    * ExpiredTenderNotices: List<TenderNoticeProjection>
-    * AwardedTenderNotices: List<TenderNoticeProjection>
-* Applications:
-  * **WebApi**
-    * Entry point for all model manipulation
-  * **Crawler**
-    * On interval, queries GoC and updates active, amended, expired, awarded
+
+## Mermaid Flowchart
+
+```mermaid
+flowchart TD
+    A[(GoC\nProcurement\nData)] -.->|rss feed| B{{Crawler}}
+    file[(file://\ntest data)] -.->|rss feed| B{{Crawler}}
+    B --> |HTTP POST| C[WebApi]
+    E{{Report User}} --> |HTTP GET| C
+    C --> |ProcessUpdate| D[Silo]
+    D -->|Entity Grain| TenderNotices[(Persistent State)]
+    D -->|Aggregate Grain| TenderNoticesSummary[(Persistent State)]
+    subgraph Persistence
+    TenderNotices --> ats[(Azure Table Storage)]
+    TenderNoticesSummary --> ats[(Azure Table Storage)]
+    end
+```
 
 
 # Technical Reference

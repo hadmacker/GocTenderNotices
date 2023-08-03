@@ -60,11 +60,7 @@ namespace Crawler
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             if (string.IsNullOrWhiteSpace(_feedSettings.Feed))
-            {
                 return;
-            }
-
-            //string rssFeedUrl = "file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/active.rss";
             await CrawlFeed(_feedSettings.Feed);
         }
 
