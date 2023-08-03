@@ -19,6 +19,11 @@ namespace Grains
             _state = state;
         }
 
+        public Task<List<TenderNoticeState>> GetState()
+        {
+            return Task.FromResult(_state.State);
+        }
+
         public async Task ProcessUpdate(TenderNoticeState state, bool remove)
         {
             var matches = _state.State.Where(id => id.FeedGuid.Equals(state.FeedGuid, StringComparison.OrdinalIgnoreCase)).ToList();

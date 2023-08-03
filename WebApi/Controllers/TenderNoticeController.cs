@@ -24,12 +24,30 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "Active")]
-        public async Task<IEnumerable<TenderNoticeState>> GetActiveAsync()
+        [HttpGet("Active")]
+        public async Task<IEnumerable<TenderNoticeDto>> GetActiveAsync()
         {
-            return new List<TenderNoticeState>();
+            var tenderNotice = _clusterClient.GetGrain<ITenderNoticeSummary>(ProcurementStatus.Active.ToString());
+            return _mapper.Map<IEnumerable<TenderNoticeDto>>(await tenderNotice.GetState());
         }
-
+        [HttpGet("Expired")]
+        public async Task<IEnumerable<TenderNoticeDto>> GetExpiredAsync()
+        {
+            var tenderNotice = _clusterClient.GetGrain<ITenderNoticeSummary>(ProcurementStatus.Expired.ToString());
+            return _mapper.Map<IEnumerable<TenderNoticeDto>>(await tenderNotice.GetState());
+        }
+        [HttpGet("Amended")]
+        public async Task<IEnumerable<TenderNoticeDto>> GetAmendedAsync()
+        {
+            var tenderNotice = _clusterClient.GetGrain<ITenderNoticeSummary>(ProcurementStatus.Amended.ToString());
+            return _mapper.Map<IEnumerable<TenderNoticeDto>>(await tenderNotice.GetState());
+        }
+        [HttpGet("Awarded")]
+        public async Task<IEnumerable<TenderNoticeDto>> GetAwardedAsync()
+        {
+            var tenderNotice = _clusterClient.GetGrain<ITenderNoticeSummary>(ProcurementStatus.Awarded.ToString());
+            return _mapper.Map<IEnumerable<TenderNoticeDto>>(await tenderNotice.GetState());
+        }
 
         [HttpPost(Name = "PostTenderNotice")]
         public async Task<ActionResult<TenderNoticeDto>> PostTenderNotice(TenderNoticeDto tenderNoticeDto)

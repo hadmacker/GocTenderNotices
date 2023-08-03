@@ -52,11 +52,11 @@ namespace Grains
             switch (state.Status)
             {
                 case ProcurementStatus.Active:
-                    processActive(true);
+                    processActive(false);
                     break;
                 case ProcurementStatus.Awarded:
-                    processActive(false);
-                    processAwarded(true);
+                    processActive(true);
+                    processAwarded(false);
                     break;
                 case ProcurementStatus.Expired:
                     processActive(true);
@@ -64,9 +64,9 @@ namespace Grains
                     processExpired(false);
                     break;
                 case ProcurementStatus.Amended:
-                    processActive(true);
-                    processAmended(true);
-                    processAwarded(true);
+                    processActive(false);
+                    processAmended(false);
+                    processAwarded(false);
                     break;
             }
 

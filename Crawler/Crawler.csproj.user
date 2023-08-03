@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>Crawler Expired</ActiveDebugProfile>
+    <ActiveDebugProfile>Crawler Amended</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

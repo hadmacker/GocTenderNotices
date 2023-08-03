@@ -64,6 +64,8 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
 
 # Project Definition
 
+:wawrning: What follows in this section is a draft and may not perfectly match implementation. It is a rough design subject to change.
+
 * Inputs
   * **Common**
     * All RSS feeds have the following format:
@@ -87,7 +89,11 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
   * **Expired** RSS
     * Status: Expired (inferred from input)
   * **Amended** RSS
-    * 
+    * Status: Whatever. But status is not changed. Also does not insert records. Assumes only records we already know about will be amended.
+* Gaps
+  * Assumes no prior history is relevant.
+  * Awarded, Amended, Expired may be for prior history and this behaviour is untested. (See prior gap.)
+  * Tender notices are not "deactivated" or cleaned up after a while. This system may not be suited for long-term large datasets as a result.
 * Models
   * **TenderNotice**
     * Title
@@ -96,8 +102,6 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
     * Flags (Dictionary<string, string>)
     * visibleDate
       * Treated as Created Date, though is really date publication was identified through feeds.
-    * amendedDate
-      * All updates modify this record with the date in feed.
     * updatedDate
       * All updates modify this record with the current environment datetime.
       * upatedDate always updated on any action.
@@ -127,9 +131,6 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
 
 * [Worker services in .NET](https://learn.microsoft.com/en-us/dotnet/core/extensions/workers?pivots=dotnet-7-0)
 * [Configuration](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration)
-
-## ASP.NET Core Web API
-
 * [Tutorial: Create a web API with ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-7.0&tabs=visual-studio)
 
 ## Automapper
@@ -142,6 +143,7 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
 
 ## Orleans
 
+* [Orleans Best Practices](https://learn.microsoft.com/en-us/dotnet/orleans/resources/best-practices)
 * [Orleans Tutorials and Samples](https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/tutorial-1?source=recommendations)
   * Consider using State instead of a database.
 * [Github: Orleans Samples](https://github.com/dotnet/samples/blob/main/orleans/)

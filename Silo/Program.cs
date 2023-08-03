@@ -23,13 +23,21 @@ namespace Silo
                     else
                     {
                         silo.AddAzureTableGrainStorage(
-                        name: "tenderNoticesStore",
-                        configureOptions: options =>
-                        {
-                            options.ConfigureTableServiceClient(goctnorleans);
-                            options.TableName = $"tenderNotices";
-                        }
-                        );
+                            name: "tenderNoticesStore",
+                            configureOptions: options =>
+                                {
+                                    options.ConfigureTableServiceClient(goctnorleans);
+                                    options.TableName = $"tenderNotices";
+                                }
+                            );
+                        silo.AddAzureTableGrainStorage(
+                            name: "tenderNoticesSummaryStore",
+                            configureOptions: options =>
+                            {
+                                options.ConfigureTableServiceClient(goctnorleans);
+                                options.TableName = $"tenderNoticesSummary";
+                            }
+                            );
                     }
                     silo.Services
                         .AddSerializer(
