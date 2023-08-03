@@ -4,6 +4,8 @@ Personal project to track changes to the [Government of Canada's Tender Notices 
 
 # Getting Started
 
+## Developer Onboarding
+
 * Installations
   * [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
   * **Visual Studio 2022** version `17.6` or greater. Be sure to check for updates!
@@ -16,11 +18,16 @@ Personal project to track changes to the [Government of Canada's Tender Notices 
         * Inline base64 encode/decode selection
       * [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
         * Light-weight Postman replacement.
+* Setup PowerShell Local Script execution
+  * `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 * Useful Commands
   * Remove Bin/Obj folders: `gci -include bin,obj -recurse | remove-item -force -recurse`
 * Set up Azure Table Storage for Grains persistence:
   * Create an environment variable named `goctnorleans` with a connection string for writing grains.
 
+## How to Run
+
+1. Run the Silo: `
 
 # About the Data Set
 
@@ -137,10 +144,13 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
 
 * [Orleans Tutorials and Samples](https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/tutorial-1?source=recommendations)
   * Consider using State instead of a database.
+* [Github: Orleans Samples](https://github.com/dotnet/samples/blob/main/orleans/)
+  * [Sample communication across grains](https://github.com/dotnet/samples/blob/main/orleans/TicTacToe/Grains/GameGrain.cs)
 * Persistence
   * [Custom Grain Storage](https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/custom-grain-storage?pivots=orleans-7-0)
   * [Grain Persistence](https://learn.microsoft.com/en-us/dotnet/orleans/grains/grain-persistence/?pivots=orleans-7-0)
   * [Serialization Surrogates](https://learn.microsoft.com/en-us/dotnet/orleans/host/configuration-guide/serialization?pivots=orleans-7-0#surrogates-for-serializing-foreign-types)
+* [Orleans Transactions](https://learn.microsoft.com/en-us/dotnet/orleans/grains/transactions)
 
 ### Troubleshooting Orleans
 

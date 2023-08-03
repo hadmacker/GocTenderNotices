@@ -25,8 +25,55 @@ namespace Grains
         public async Task ProcessUpdate(TenderNoticeState state, ProcurementStatus status)
         {
             _logger.LogInformation($"ProcessUpdate for {state.FeedGuid}, Status: {status}");
+
+            var tasks = new List<Task>();
+
+            var processActive = (bool remove) =>
+            {
+                var summaryGrain = GrainFactory.GetGrain<ITenderNoticeSummary>(ProcurementStatus.Active.ToString());
+                tasks.Add(summaryGrain.ProcessUpdate(state, remove));
+            };
+            var processAmended = (bool remove) =>
+            {
+                var summaryGrain = GrainFactory.GetGrain<ITenderNoticeSummary>(ProcurementStatus.Amended.ToString());
+                tasks.Add(summaryGrain.ProcessUpdate(state, remove));
+            };
+            var processExpired = (bool remove) =>
+            {
+                var summaryGrain = GrainFactory.GetGrain<ITenderNoticeSummary>(ProcurementStatus.Expired.ToString());
+                tasks.Add(summaryGrain.ProcessUpdate(state, remove));
+            };
+            var processAwarded = (bool remove) =>
+            {
+                var summaryGrain = GrainFactory.GetGrain<ITenderNoticeSummary>(ProcurementStatus.Awarded.ToString());
+                tasks.Add(summaryGrain.ProcessUpdate(state, remove));
+            };
+
+            switch (state.Status)
+            {
+                case ProcurementStatus.Active:
+                    processActive(true);
+                    break;
+                case ProcurementStatus.Awarded:
+                    processActive(false);
+                    processAwarded(true);
+                    break;
+                case ProcurementStatus.Expired:
+                    processActive(true);
+                    processAwarded(true);
+                    processExpired(false);
+                    break;
+                case ProcurementStatus.Amended:
+                    processActive(true);
+                    processAmended(true);
+                    processAwarded(true);
+                    break;
+            }
+
             _state.State = state;
-            await _state.WriteStateAsync();
+            tasks.Add(_state.WriteStateAsync());
+
+            await Task.WhenAll(tasks);
         }
     }
 }

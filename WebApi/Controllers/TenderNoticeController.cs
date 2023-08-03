@@ -24,7 +24,7 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "GetActive")]
+        [HttpGet(Name = "Active")]
         public async Task<IEnumerable<TenderNoticeState>> GetActiveAsync()
         {
             return new List<TenderNoticeState>();
