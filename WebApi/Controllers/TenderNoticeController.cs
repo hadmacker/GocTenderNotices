@@ -2,7 +2,7 @@ using AutoMapper;
 using GocTenderNotices.Contracts.State;
 using GrainInterfaces;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.DTO;
+using WebApi.Contracts.DTO;
 
 namespace WebApi.Controllers
 {

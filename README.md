@@ -119,6 +119,7 @@ Alternative feeds to reduce bandwidth requirements of downloading and re-process
 ## .NET
 
 * [Worker services in .NET](https://learn.microsoft.com/en-us/dotnet/core/extensions/workers?pivots=dotnet-7-0)
+* [Configuration](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration)
 
 ## ASP.NET Core Web API
 

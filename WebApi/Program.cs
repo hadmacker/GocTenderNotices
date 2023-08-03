@@ -38,8 +38,12 @@ namespace WebApi
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                Console.WriteLine("Is Development");
                 app.UseSwagger();
                 app.UseSwaggerUI();
+            } else
+            {
+                Console.WriteLine("Not Development");
             }
 
             app.UseHttpsRedirection();

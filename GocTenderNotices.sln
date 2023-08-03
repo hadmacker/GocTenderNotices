@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawler", "Crawler\Crawler.csproj", "{7D25A7F2-6D2C-4653-9675-E1456C1CEB86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Contracts", "WebApi.Contracts\WebApi.Contracts.csproj", "{BA5C755D-0665-46D8-8240-215EBB1EE5B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Client", "WebApi.Client\WebApi.Client.csproj", "{8134546B-0ECF-43FB-96AE-39F3F03E5168}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,14 @@ Global
 		{7D25A7F2-6D2C-4653-9675-E1456C1CEB86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D25A7F2-6D2C-4653-9675-E1456C1CEB86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D25A7F2-6D2C-4653-9675-E1456C1CEB86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA5C755D-0665-46D8-8240-215EBB1EE5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA5C755D-0665-46D8-8240-215EBB1EE5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA5C755D-0665-46D8-8240-215EBB1EE5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA5C755D-0665-46D8-8240-215EBB1EE5B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8134546B-0ECF-43FB-96AE-39F3F03E5168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8134546B-0ECF-43FB-96AE-39F3F03E5168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8134546B-0ECF-43FB-96AE-39F3F03E5168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8134546B-0ECF-43FB-96AE-39F3F03E5168}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,11 @@ using Microsoft.Extensions.Logging;
 using System.Xml;
 using System.ServiceModel.Syndication;
 using System.Xml.Linq;
+using WebApi.Client;
+using Microsoft.Extensions.Configuration;
+using WebApi.Contracts.DTO;
+using System.Diagnostics.Tracing;
+using System.Diagnostics;
 
 namespace Crawler
 {
@@ -12,7 +17,18 @@ namespace Crawler
         static async Task Main(string[] args)
         {
             var builder = Host.CreateApplicationBuilder(args);
+
+            // [Configuration](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration)
+            builder.Configuration
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+
             builder.Services.AddHostedService<Worker>();
+            builder.Services.AddCrawlerSettings(builder.Configuration);
+            builder.Services.AddFeedSettings(builder.Configuration);
+            builder.Services.AddTenderNoticesApiClient(builder.Configuration);
+
             using IHost host = builder.Build();
             host.Run();
         }
@@ -20,21 +36,42 @@ namespace Crawler
 
     public class Worker : BackgroundService
     {
+        private readonly IHostApplicationLifetime _lifetime;
         private readonly ILogger<Worker> _logger;
+        private readonly ITenderNoticesApiClient _tenderNoticeClient;
+        private readonly FeedSettings _feedSettings;
+        private readonly CrawlerSettings _crawlerSettings;
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(
+            IHostApplicationLifetime lifetime,
+            ILogger<Worker> logger, 
+            FeedSettings feedSettings,
+            CrawlerSettings crawlerSettings,
+            ITenderNoticesApiClient tenderNoticeClient
+            )
         {
+            _lifetime = lifetime;
             _logger = logger;
+            _tenderNoticeClient = tenderNoticeClient;
+            _feedSettings = feedSettings;
+            _crawlerSettings = crawlerSettings;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            string rssFeedUrl = "file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/active.rss";
-            CrawlFeed(rssFeedUrl);
+            if (string.IsNullOrWhiteSpace(_feedSettings.Feed))
+            {
+                return;
+            }
+
+            //string rssFeedUrl = "file:///C:/code/hadmacker/GocTenderNotices/Documents/procurement-data/feed/local/active.rss";
+            await CrawlFeed(_feedSettings.Feed);
         }
 
-        private void CrawlFeed(string rssFeedUrl)
+        private async Task CrawlFeed(string rssFeedUrl)
         {
+            var elapsed = new Stopwatch();
+            elapsed.Start();
             try
             {
                 using (XmlReader reader = XmlReader.Create(rssFeedUrl))
@@ -46,7 +83,7 @@ namespace Crawler
                         var feedLinks = feed.Links.Where(l => l.RelationshipType != "self");
                         foreach (var link in feedLinks)
                         {
-                            CrawlFeed(link.Uri.ToString());
+                            await CrawlFeed(link.Uri.ToString());
                         }
                     }
                     else
@@ -55,6 +92,20 @@ namespace Crawler
                         List<string> rssItems = new List<string>();
                         foreach (var item in feed.Items)
                         {
+                            if(_feedSettings.ExcludedIdPrefixes.Any(prefix => item.Id.StartsWith(prefix))) {
+                                // Skip item if its prefix begins with an excluded prefix.
+                                continue;
+                            }
+
+                            var currentItem = new TenderNoticeDto
+                            {
+                                Id = item.Id,
+                                Title =item.Title.Text,
+                                Description = item.Summary.Text,
+                                Link = item?.Links?.FirstOrDefault()?.Uri?.ToString() ?? "",
+                                Status = _crawlerSettings.TargetStatus,
+                                VisibleDate = DateTime.Now,
+                            };
                             _logger.LogInformation($"{item.Title.Text} - {item.Content} - {item.Links}");
                             foreach (var extension in item.ElementExtensions)
                             {
@@ -63,6 +114,10 @@ namespace Crawler
                                     if(!customElement.HasElements)
                                     {
                                         _logger.LogInformation($"{customElement.Name}:{customElement?.Value}");
+                                        if(customElement.Name.LocalName == "creator")
+                                        {
+                                            currentItem.Creator = customElement.Value;
+                                        }
                                     }
                                     if(customElement.HasElements)
                                     {
@@ -73,6 +128,7 @@ namespace Crawler
                                     }
                                 }
                             }
+                            await _tenderNoticeClient.PostTenderNotice(currentItem);
                         }
                     }
                 }
@@ -81,6 +137,9 @@ namespace Crawler
             {
                 _logger.LogError("Error fetching RSS feed: " + ex.Message);
             }
+
+            _logger.LogInformation($"Worker process complete in {elapsed.ToString()}");
+            _lifetime.StopApplication();
         }
     }
 }
