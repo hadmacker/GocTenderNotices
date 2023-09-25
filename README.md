@@ -146,6 +146,11 @@ flowchart TD
 * [Configuration Profiles](https://docs.automapper.org/en/latest/Configuration.html#profile-instances)
 * [Projection](https://docs.automapper.org/en/latest/Projection.html)
 
+## Stateless
+
+* [Stateless](https://github.com/dotnet-state-machine/stateless)
+  * Create state machines and lightweight state machine-based workflows directly in .NET code
+
 ## Orleans
 
 * [Orleans Best Practices](https://learn.microsoft.com/en-us/dotnet/orleans/resources/best-practices)
